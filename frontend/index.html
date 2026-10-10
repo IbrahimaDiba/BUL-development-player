@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Basketball Development System</title>
+  <meta name="description" content="Identifiez précisément les écarts entre votre niveau actuel et votre profil NBA cible grâce à l'intelligence artificielle.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <canvas id="particles-bg"></canvas>
+  <div id="toast-container" class="toast-container"></div>
+  <main id="app-container">
+    
+    <!-- Section 1: HERO -->
+    <section id="section-hero" class="section">
+      <div class="hero-content">
+        <span class="hero-label"><span class="dot"></span>Powered by Machine Learning</span>
+        <h1 class="hero-title">AI BASKETBALL<br><span class="dim">DEVELOPMENT</span><br><span class="dim">SYSTEM</span></h1>
+        <p class="hero-subtitle">Identifiez précisément les écarts entre votre niveau actuel et votre profil NBA cible grâce à l'intelligence artificielle.</p>
+        <div class="features-row">
+          <div class="feature-pill"><span class="icon">🧠</span>Analyse IA Clustering</div>
+          <div class="feature-pill"><span class="icon">📊</span>Comparaison Détaillée</div>
+          <div class="feature-pill"><span class="icon">🗺️</span>Roadmap Personnalisée</div>
+        </div>
+        <div class="hero-cta">
+          <button class="btn-primary" id="hero-start-btn" onclick="app.showSection('section-form-1')">Commencer Mon Analyse →</button>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-badge float-anim-1">
+          <div class="stat-val">33K+</div>
+          <div class="stat-lbl">Profils NBA</div>
+        </div>
+        <div class="stat-badge float-anim-2">
+          <div class="stat-val">1947→2026</div>
+          <div class="stat-lbl">Données historiques</div>
+        </div>
+        <div class="stat-badge float-anim-3">
+          <div class="stat-val">4 Clusters</div>
+          <div class="stat-lbl">Archétypes IA</div>
+        </div>
+      </div>
+      <div class="court-lines">
+        <!-- SVG placeholder for court lines -->
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path d="M0,100 C20,80 80,80 100,100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Section 2: STEP 1 — Informations -->
+    <section id="section-form-1" class="section hidden">
+      <div class="container glass-panel form-container">
+        <div class="progress-steps">
+          <div class="step active">1</div>
+          <div class="step-line"></div>
+          <div class="step">2</div>
+          <div class="step-line"></div>
+          <div class="step">3</div>
+        </div>
+        <div class="section-header">
+          <div class="tag">Étape 01</div>
+          <h2 class="title">Votre Profil</h2>
+          <p class="subtitle">Renseignez vos informations personnelles</p>
+        </div>
+        <div class="form-body">
+          <div class="form-group full-width">
+            <label>Nom du joueur</label>
+            <input type="text" name="Nom du joueur" id="input-name" placeholder="Votre nom">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Âge</label>
+              <div class="slider-group">
+                <div class="slider-header">
+                  <span class="slider-value" id="val-age">22</span>
+                </div>
+                <input type="range" id="input-age" min="15" max="40" value="22" oninput="document.getElementById('val-age').textContent = this.value">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Position</label>
+              <div class="position-selector">
+                <button class="pos-pill" onclick="app.selectPosition(this, 'PG')">PG</button>
+                <button class="pos-pill selected" onclick="app.selectPosition(this, 'SG')">SG</button>
+                <button class="pos-pill" onclick="app.selectPosition(this, 'SF')">SF</button>
+                <button class="pos-pill" onclick="app.selectPosition(this, 'PF')">PF</button>
+                <button class="pos-pill" onclick="app.selectPosition(this, 'C')">C</button>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Taille (cm)</label>
+              <div class="slider-group">
+                <div class="slider-header">
+                  <span class="slider-value" id="val-height">196</span>
+                </div>
+                <input type="range" id="input-height" min="160" max="220" value="196" oninput="document.getElementById('val-height').textContent = this.value">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Poids (kg)</label>
+              <div class="slider-group">
+                <div class="slider-header">
+                  <span class="slider-value" id="val-weight">90</span>
+                </div>
+                <input type="range" id="input-weight" min="60" max="140" value="90" oninput="document.getElementById('val-weight').textContent = this.value">
+              </div>
+            </div>
+          </div>
+          <div class="form-group full-width">
+            <label>Niveau de compétition actuel</label>
+            <div class="level-grid">
+              <div class="level-card" id="level-lycee" onclick="app.selectLevel(this, 'lycee')">
+                <div class="level-name">Lycée / Amateur</div>
+                <div class="level-desc">Compétition régionale</div>
+              </div>
+              <div class="level-card" id="level-univ" onclick="app.selectLevel(this, 'univ')">
+                <div class="level-name">Universitaire</div>
+                <div class="level-desc">NCAA, NF3</div>
+              </div>
+              <div class="level-card selected" id="level-semipro" onclick="app.selectLevel(this, 'semipro')">
+                <div class="level-name">Semi-Professionnel</div>
+                <div class="level-desc">Pro B, NF2</div>
+              </div>
+              <div class="level-card" id="level-pro" onclick="app.selectLevel(this, 'pro')">
+                <div class="level-name">Professionnel</div>
+                <div class="level-desc">Pro A, Euroleague</div>
+              </div>
+              <div class="level-card" id="level-intl" onclick="app.selectLevel(this, 'intl')">
+                <div class="level-name">International</div>
+                <div class="level-desc">Haut niveau mondial</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-nav">
+          <button class="btn-ghost" onclick="app.showSection('section-hero')">Retour</button>
+          <button class="btn-primary" id="next-to-stats" onclick="if(app.collectPlayerInfo()) app.showSection('section-form-2')">Mes Statistiques →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: STEP 2 — Statistiques -->
+    <section id="section-form-2" class="section hidden">
+      <div class="container glass-panel form-container">
+        <div class="progress-steps">
+          <div class="step completed">1</div>
+          <div class="step-line active"></div>
+          <div class="step active">2</div>
+          <div class="step-line"></div>
+          <div class="step">3</div>
+        </div>
+        <div class="section-header">
+          <div class="tag">Étape 02</div>
+          <h2 class="title">Vos Statistiques</h2>
+          <p class="subtitle">Par match sur la saison</p>
+        </div>
+        <div class="form-body">
+          <div class="stats-group">
+            <label class="group-label">PARTICIPATION</label>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Minutes / Match</label>
+                <div class="slider-group">
+                  <div class="slider-header"><span class="slider-value" id="val-mp">25</span></div>
+                  <input type="range" id="stat-mp" min="0" max="48" value="25" step="0.5" oninput="document.getElementById('val-mp').textContent = this.value; app.updateLivePreview();">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>% Titulaire</label>
+                <div class="slider-group">
+                  <div class="slider-header"><span class="slider-value" id="val-gs">50</span>%</div>
+                  <input type="range" id="stat-gs" min="0" max="100" value="50" oninput="document.getElementById('val-gs').textContent = this.value; app.updateLivePreview();">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-group">
+            <label class="group-label">SCORING</label>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Points</label>
+                <input type="number" id="stat-pts" value="10.5" step="0.1" oninput="app.updateLivePreview()">
+              </div>
+              <div class="form-group">
+                <label>Tirs (Réussis / Tentés)</label>
+                <div style="display:flex; gap:8px;">
+                  <input type="number" id="stat-fg_m" value="4.0" step="0.1" placeholder="M" oninput="app.updateLivePreview()">
+                  <input type="number" id="stat-fg_a" value="10.0" step="0.1" placeholder="A" oninput="app.updateLivePreview()">
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>3 Points (Réussis / Tentés)</label>
+                <div style="display:flex; gap:8px;">
+                  <input type="number" id="stat-x3p_m" value="1.2" step="0.1" placeholder="M" oninput="app.updateLivePreview()">
+                  <input type="number" id="stat-x3p_a" value="3.5" step="0.1" placeholder="A" oninput="app.updateLivePreview()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Lancers Francs (Réussis / Tentés)</label>
+                <div style="display:flex; gap:8px;">
+                  <input type="number" id="stat-ft_m" value="2.0" step="0.1" placeholder="M" oninput="app.updateLivePreview()">
+                  <input type="number" id="stat-ft_a" value="2.8" step="0.1" placeholder="A" oninput="app.updateLivePreview()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-group">
+            <label class="group-label">REBONDS</label>
+            <div class="form-row-3">
+              <div class="form-group">
+                <label>Offensifs</label>
+                <input type="number" id="stat-orb" value="1.0" step="0.1" oninput="app.updateLivePreview()">
+              </div>
+              <div class="form-group">
+                <label>Défensifs</label>
+                <input type="number" id="stat-drb" value="3.0" step="0.1" oninput="app.updateLivePreview()">
+              </div>
+              <div class="form-group">
+                <label>Total</label>
+                <input type="number" id="stat-trb" value="4.0" step="0.1" oninput="app.updateLivePreview()">
+              </div>
+            </div>
+          </div>
+
+          <div class="stats-group">
+            <label class="group-label">PASSES & DÉFENSE</label>
+            <div class="form-row-3">
+              <div class="form-group">
+                <label>Passes (AST)</label>
+                <input type="number" id="stat-ast" value="3.0" step="0.1" oninput="app.updateLivePreview()">
+              </div>
+              <div class="form-group">
+                <label>Interceptions (STL)</label>
+                <input type="number" id="stat-stl" value="0.8" step="0.1" oninput="app.updateLivePreview()">
+              </div>
+              <div class="form-group">
+                <label>Contres (BLK)</label>
+                <input type="number" id="stat-blk" value="0.3" step="0.1" oninput="app.updateLivePreview()">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Pertes de Balle (TOV)</label>
+                <input type="number" id="stat-tov" value="1.5" step="0.1" oninput="app.updateLivePreview()">
+              </div>
+              <div class="form-group">
+                <label>Fautes (PF)</label>
+                <input type="number" id="stat-pf" value="2.0" step="0.1" oninput="app.updateLivePreview()">
+              </div>
+            </div>
+          </div>
+
+          <div class="live-preview">
+            <div class="preview-stat">
+              <div class="val" id="prev-pts">10.5</div>
+              <div class="lbl">PTS</div>
+            </div>
+            <div class="preview-stat">
+              <div class="val" id="prev-ast">3.0</div>
+              <div class="lbl">AST</div>
+            </div>
+            <div class="preview-stat">
+              <div class="val" id="prev-reb">4.0</div>
+              <div class="lbl">REB</div>
+            </div>
+            <div class="preview-stat">
+              <div class="val" id="prev-fg">40%</div>
+              <div class="lbl">FG%</div>
+            </div>
+            <div class="preview-stat">
+              <div class="val" id="prev-ts">50%</div>
+              <div class="lbl">TS%</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-nav">
+          <button class="btn-ghost" onclick="app.showSection('section-form-1')">Retour</button>
+          <button class="btn-primary" id="next-to-target" onclick="app.showSection('section-target')">Choisir Ma Cible NBA →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: STEP 3 — Cible NBA -->
+    <section id="section-target" class="section hidden">
+      <div class="container glass-panel form-container">
+        <div class="progress-steps">
+          <div class="step completed">1</div>
+          <div class="step-line completed"></div>
+          <div class="step completed">2</div>
+          <div class="step-line active"></div>
+          <div class="step active">3</div>
+        </div>
+        <div class="section-header">
+          <div class="tag">Étape 03</div>
+          <h2 class="title">Cible NBA</h2>
+          <p class="subtitle">Choisissez le profil NBA que vous souhaitez atteindre</p>
+        </div>
+        <div class="form-body">
+          <div class="search-wrapper">
+            <span class="icon">🔍</span>
+            <input id="player-search-input" type="text" placeholder="Rechercher un joueur NBA (ex: LeBron James, Stephen Curry...)" oninput="app.searchPlayers(this.value)">
+          </div>
+          <div id="search-results"></div>
+          <div id="selected-target-info" class="glass-panel" style="display:none; padding:16px 20px; margin:16px 0;"></div>
+        </div>
+        <div class="form-nav">
+          <button class="btn-ghost" onclick="app.showSection('section-form-2')">Retour</button>
+          <div style="display:flex; flex-direction:column; align-items:flex-end; gap:8px;">
+            <button class="btn-primary" id="launch-btn" disabled onclick="app.launchAnalysis()">🚀 Lancer l'Analyse</button>
+            <a href="#" id="skip-target" style="font-size:12px; color:var(--silver);" onclick="event.preventDefault(); app.selectTarget(null, 'Automatique (Clustering)'); app.launchAnalysis();">Analyser sans cible spécifique</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: LOADING -->
+    <section id="section-loading" class="section hidden">
+      <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; gap:32px; height:100vh;">
+        <div class="loader-ring"></div>
+        <div style="text-align:center;">
+          <h2 style="margin-bottom:8px;">Analyse en cours...</h2>
+          <p style="color:var(--silver);">L'IA traite vos données</p>
+        </div>
+        <div class="loader-messages" style="text-align:center; height:30px; position:relative; overflow:hidden;">
+          <div class="loader-msg" id="msg-1">Analyse du profil du joueur...</div>
+          <div class="loader-msg" id="msg-2" style="display:none;">Calcul des percentiles NBA...</div>
+          <div class="loader-msg" id="msg-3" style="display:none;">Recherche des profils similaires...</div>
+          <div class="loader-msg" id="msg-4" style="display:none;">Génération de la roadmap...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: RESULTS -->
+    <section id="section-results" class="section hidden">
+      <div class="container-wide">
+        <div class="results-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px;">
+          <div class="player-headline">
+            <h2 id="result-player-name">Nom du Joueur</h2>
+            <div class="archetype-badge" id="result-archetype">Archétype</div>
+          </div>
+          <div class="score-circle-wrapper" style="text-align:center;">
+            <div class="score-circle">
+              <span class="score-num" id="result-score">0</span>
+              <span class="score-lbl">/ 100</span>
+            </div>
+            <div class="level-pill" id="result-level">Niveau</div>
+          </div>
+        </div>
+
+        <div class="tabs-nav">
+          <button class="tab-btn active" id="tab-profile" onclick="app.switchTab('profile')">Profil</button>
+          <button class="tab-btn" id="tab-comparison" onclick="app.switchTab('comparison')">Comparaison NBA</button>
+          <button class="tab-btn" id="tab-similar" onclick="app.switchTab('similar')">Joueurs Similaires</button>
+          <button class="tab-btn" id="tab-roadmap" onclick="app.switchTab('roadmap')">Roadmap</button>
+        </div>
+
+        <div class="tab-content active" id="tab-content-profile">
+          <div class="dimensions-grid">
+            <div class="dim-card" id="dim-scoring">
+              <div class="dim-header"><span class="dim-name">Scoring</span><span class="dim-value">0</span></div>
+              <div class="dim-bar"><div class="dim-bar-fill"></div></div>
+            </div>
+            <div class="dim-card" id="dim-playmaking">
+              <div class="dim-header"><span class="dim-name">Playmaking</span><span class="dim-value">0</span></div>
+              <div class="dim-bar"><div class="dim-bar-fill"></div></div>
+            </div>
+            <div class="dim-card" id="dim-rebounding">
+              <div class="dim-header"><span class="dim-name">Rebonding</span><span class="dim-value">0</span></div>
+              <div class="dim-bar"><div class="dim-bar-fill"></div></div>
+            </div>
+            <div class="dim-card" id="dim-defense">
+              <div class="dim-header"><span class="dim-name">Défense</span><span class="dim-value">0</span></div>
+              <div class="dim-bar"><div class="dim-bar-fill"></div></div>
+            </div>
+            <div class="dim-card" id="dim-three-point">
+              <div class="dim-header"><span class="dim-name">3-Points</span><span class="dim-value">0</span></div>
+              <div class="dim-bar"><div class="dim-bar-fill"></div></div>
+            </div>
+            <div class="dim-card" id="dim-efficiency">
+              <div class="dim-header"><span class="dim-name">Efficacité</span><span class="dim-value">0</span></div>
+              <div class="dim-bar"><div class="dim-bar-fill"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content" id="tab-content-comparison">
+          <div class="chart-card">
+            <p class="chart-title">Comparaison des Dimensions</p>
+            <canvas id="radar-chart" height="320"></canvas>
+            <div class="chart-legend">
+              <div class="legend-item"><div class="legend-dot player"></div><span id="legend-player">Votre profil</span></div>
+              <div class="legend-item"><div class="legend-dot target"></div><span id="legend-target">Cible NBA</span></div>
+            </div>
+          </div>
+          <div id="gap-analysis-container" class="gap-grid" style="margin-top:24px;"></div>
+        </div>
+
+        <div class="tab-content" id="tab-content-similar">
+          <div id="similar-players-container" class="similar-grid"></div>
+        </div>
+
+        <div class="tab-content" id="tab-content-roadmap">
+          <div class="roadmap-header-stats" style="display:flex; gap:16px; margin-bottom:24px;">
+            <div class="roadmap-stat-card glass-panel" style="padding:16px; flex:1;">
+              <div style="font-size:12px; color:var(--silver);">Faisabilité</div>
+              <div id="roadmap-feasibility" style="font-size:24px; font-weight:700;">-</div>
+            </div>
+            <div class="roadmap-stat-card glass-panel" style="padding:16px; flex:1;">
+              <div style="font-size:12px; color:var(--silver);">Temps estimé</div>
+              <div id="roadmap-time" style="font-size:24px; font-weight:700;">-</div>
+            </div>
+          </div>
+          <div id="roadmap-container" class="priority-list"></div>
+        </div>
+
+        <div class="form-nav" style="margin-top:32px; justify-content:center;">
+          <button class="btn-secondary" onclick="app.showSection('section-reevaluate')">🔄 Réévaluer mes stats</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: REEVALUATION -->
+    <section id="section-reevaluate" class="section hidden">
+      <div class="container glass-panel form-container">
+        <div class="section-header">
+          <div class="tag">Réévaluation</div>
+          <h2 class="title">Mettre à jour mes statistiques</h2>
+          <p class="subtitle">Entrez vos nouvelles statistiques pour mesurer votre progression</p>
+        </div>
+        
+        <div id="progression-display" class="progression-grid" style="display:none; margin-bottom:24px;"></div>
+
+        <div class="form-body">
+          <div class="stats-group">
+            <label class="group-label">NOUVELLES STATS</label>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Points</label>
+                <input type="number" id="reeval-pts" step="0.1">
+              </div>
+              <div class="form-group">
+                <label>Passes (AST)</label>
+                <input type="number" id="reeval-ast" step="0.1">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Rebonds (TRB)</label>
+                <input type="number" id="reeval-trb" step="0.1">
+              </div>
+              <div class="form-group">
+                <label>% Tirs (FG)</label>
+                <input type="number" id="reeval-fg" step="0.1" placeholder="Ex: 45.0">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-nav">
+          <button class="btn-ghost" onclick="app.showSection('section-results')">Retour aux Résultats</button>
+          <button class="btn-primary" id="reeval-submit" onclick="app.submitReevaluation()">Calculer ma Progression</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

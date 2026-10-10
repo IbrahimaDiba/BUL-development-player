@@ -1,0 +1,12 @@
+{
+  "messages": [{"role": "user", "content": "Comment améliorer mon tir ?"}],
+  "player_context": {
+    "name": "Jean",
+    "age": 22,
+    "position": "SG",
+    "level": "Amateur",
+    "target": "Stephen Curry",
+    "gaps": "Three-Point (-25)",
+    "focus": "Devenir un sniper"
+  }
+}

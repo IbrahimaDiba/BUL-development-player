@@ -1,0 +1,27 @@
+{
+  "player_info": {
+    "name": "Test Player",
+    "age": 22,
+    "position": "SG",
+    "height_cm": 196.0,
+    "weight_kg": 90.0,
+    "level": "semi-pro"
+  },
+  "stats": {
+    "points": 12.5,
+    "assists": 2.1,
+    "rebounds": 3.4,
+    "steals": 0.8,
+    "blocks": 0.2,
+    "turnovers": 1.5,
+    "fg_made": 4.5,
+    "fg_attempted": 10.0,
+    "threes_made": 1.0,
+    "threes_attempted": 3.0,
+    "ft_made": 2.5,
+    "ft_attempted": 3.2,
+    "minutes": 24.0,
+    "games_played": 30
+  },
+  "target_player_id": "jamesle01"
+}
