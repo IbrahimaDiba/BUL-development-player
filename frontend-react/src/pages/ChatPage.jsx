@@ -12,6 +12,7 @@ export default function ChatPage({ data, playerInfo, onBack }) {
   const [chatInput, setChatInput] = useState('')
   const [chatHistory, setChatHistory] = useState([])
   const [isTyping, setIsTyping] = useState(false)
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const chatEndRef = useRef(null)
   const inputRef = useRef(null)
 
@@ -57,10 +58,19 @@ export default function ChatPage({ data, playerInfo, onBack }) {
   const scores = data?.scores || {}
 
   return (
-    <div style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden', fontFamily: 'var(--fb)', background: '#0a0a0a' }}>
+    <div className="chat-page-root" style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden', fontFamily: 'var(--fb)', background: '#0a0a0a' }}>
+
+      {/* ── MOBILE BACKDROP ── */}
+      {mobileSidebarOpen && (
+        <div
+          onClick={() => setMobileSidebarOpen(false)}
+          className="mobile-sidebar-backdrop"
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', zIndex: 90 }}
+        />
+      )}
 
       {/* ── SIDEBAR ── */}
-      <div style={{ width: 300, flexShrink: 0, background: '#0f0f0f', borderRight: '1px solid #1a1a1a', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <div className={`chat-sidebar ${mobileSidebarOpen ? 'open' : ''}`} style={{ width: 300, flexShrink: 0, background: '#0f0f0f', borderRight: '1px solid #1a1a1a', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
         {/* Header gradient */}
         <div style={{ background: 'linear-gradient(160deg, #1c1c1c 0%, #0f0f0f 100%)', padding: '24px 20px 20px', borderBottom: '1px solid #1f1f1f' }}>
@@ -177,12 +187,18 @@ export default function ChatPage({ data, playerInfo, onBack }) {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#fafafa' }}>
 
         {/* Top bar */}
-        <div style={{ padding: '0 32px', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', borderBottom: '1px solid #f0f0f0' }}>
+        <div className="chat-top-bar" style={{ padding: '0 32px', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', borderBottom: '1px solid #f0f0f0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <button
+              className="chat-mobile-btn"
+              onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+            >
+              {mobileSidebarOpen ? '✕' : '📊 Profil'}
+            </button>
             <span style={{ fontSize: 15, fontWeight: 700, color: '#0a0a0a', letterSpacing: '-0.01em' }}>Coach IA</span>
-            <span style={{ fontSize: 12, color: '#a3a3a3', fontWeight: 400 }}>· Intelligence Artificielle</span>
+            <span className="chat-sub-label" style={{ fontSize: 12, color: '#a3a3a3', fontWeight: 400 }}>· Intelligence Artificielle</span>
           </div>
-          <div style={{ fontSize: 12, color: '#a3a3a3' }}>
+          <div className="chat-powered-label" style={{ fontSize: 12, color: '#a3a3a3' }}>
             Propulsé par BUL Player Development
           </div>
         </div>

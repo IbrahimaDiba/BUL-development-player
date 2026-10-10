@@ -119,14 +119,14 @@ export default function Results({ data, playerInfo, target, onReeval, onRestart,
     <div style={{ minHeight: '100vh', background: 'var(--white)' }}>
       {/* NAV */}
       <nav className="nav">
-        <div className="nav-inner">
+        <div className="nav-inner results-nav-inner">
           <div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             BUL Player Development
           </div>
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div className="results-nav-actions" style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
             <button className="btn btn-ghost btn-sm" onClick={onReeval}>↺ Réévaluer</button>
             <button className="btn btn-ghost btn-sm" onClick={onRestart}>Nouvelle analyse</button>
-            <button className="btn btn-accent btn-sm" onClick={onGoToChat} style={{ marginLeft: 16 }}>— Coach IA</button>
+            <button className="btn btn-accent btn-sm chat-cta-btn" onClick={onGoToChat}>— Coach IA</button>
           </div>
         </div>
       </nav>
@@ -207,9 +207,9 @@ export default function Results({ data, playerInfo, target, onReeval, onRestart,
               <>
                 {/* ── VS Banner ── */}
                 <div className="card" style={{ marginBottom: 24, background: '#0a0a0a', color: '#fff', overflow: 'hidden' }}>
-                  <div style={{ display: 'flex', alignItems: 'stretch' }}>
+                  <div className="vs-banner-grid" style={{ display: 'flex', alignItems: 'stretch' }}>
                     {/* Left: Player */}
-                    <div style={{ flex: 1, padding: '28px 32px' }}>
+                    <div className="vs-side vs-player-side" style={{ flex: 1, padding: '28px 32px' }}>
                       <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '.12em', color: '#737373', marginBottom: 8 }}>Votre Profil</div>
                       <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 4 }}>{playerInfo.name || 'Joueur'}</div>
                       <div style={{ fontSize: 12, color: '#737373', marginBottom: 16 }}>{playerInfo.position} · {playerInfo.age} ans · {playerInfo.level}</div>
@@ -221,14 +221,14 @@ export default function Results({ data, playerInfo, target, onReeval, onRestart,
                     </div>
 
                     {/* Center VS */}
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 28px', borderLeft: '1px solid #1f1f1f', borderRight: '1px solid #1f1f1f' }}>
+                    <div className="vs-divider" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 28px', borderLeft: '1px solid #1f1f1f', borderRight: '1px solid #1f1f1f' }}>
                       <div style={{ fontSize: 13, fontWeight: 900, fontStyle: 'italic', color: '#525252', letterSpacing: '.2em' }}>VS</div>
                       <div style={{ width: 1, height: 40, background: '#1f1f1f', margin: '12px 0' }} />
                       <div style={{ fontSize: 10, color: '#525252', textTransform: 'uppercase', letterSpacing: '.1em' }}>NBA</div>
                     </div>
 
                     {/* Right: Target */}
-                    <div style={{ flex: 1, padding: '28px 32px', textAlign: 'right' }}>
+                    <div className="vs-side vs-target-side" style={{ flex: 1, padding: '28px 32px', textAlign: 'right' }}>
                       <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '.12em', color: '#737373', marginBottom: 8 }}>Cible NBA</div>
                       <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: '-0.02em', marginBottom: 4 }}>{target?.name || '—'}</div>
                       <div style={{ fontSize: 12, color: '#737373', marginBottom: 16 }}>
@@ -243,7 +243,7 @@ export default function Results({ data, playerInfo, target, onReeval, onRestart,
                   </div>
 
                   {/* Stats side-by-side table */}
-                  <div style={{ borderTop: '1px solid #1f1f1f' }}>
+                  <div className="vs-stats-scroll" style={{ borderTop: '1px solid #1f1f1f' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', borderBottom: '1px solid #1f1f1f' }}>
                       {['PTS','AST','REB','STL','BLK','FG%','3P%','FT%'].map(h => (
                         <div key={h} style={{ padding: '8px 4px', textAlign: 'center', fontSize: 10, fontWeight: 700, color: '#525252', textTransform: 'uppercase', letterSpacing: '.05em' }}>{h}</div>

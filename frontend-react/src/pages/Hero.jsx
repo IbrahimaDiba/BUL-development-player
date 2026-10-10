@@ -29,7 +29,7 @@ export default function Hero({ onStart }) {
       }} />
 
       {/* ── Nav ── */}
-      <nav style={{
+      <nav className="hero-nav" style={{
         position: 'sticky', top: 0, zIndex: 10,
         background: 'var(--white)',
         borderBottom: '1px solid var(--border)',
@@ -48,7 +48,7 @@ export default function Hero({ onStart }) {
       </nav>
 
       {/* ── Hero body ── */}
-      <div style={{
+      <div className="hero-body" style={{
         flex: 1, display: 'flex', alignItems: 'center',
         maxWidth: 1400, margin: '0 auto',
         padding: '80px 48px', width: '100%',
@@ -83,7 +83,7 @@ export default function Hero({ onStart }) {
         </div>
 
         {/* RIGHT STATS */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 0, minWidth: 360, borderLeft: '1px solid var(--border)' }} className="anim-1">
+        <div className="hero-stats anim-1" style={{ display: 'flex', flexDirection: 'column', gap: 0, minWidth: 360, borderLeft: '1px solid var(--border)' }}>
           {STATS.map((s, i) => (
             <div key={i} style={{
               padding: '40px 48px',
