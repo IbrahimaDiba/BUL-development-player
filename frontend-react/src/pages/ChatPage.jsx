@@ -190,6 +190,17 @@ export default function ChatPage({ data, playerInfo, onBack }) {
         <div className="chat-top-bar" style={{ padding: '0 32px', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', borderBottom: '1px solid #f0f0f0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <button
+              onClick={onBack}
+              className="chat-back-btn"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 5,
+                background: '#f5f5f5', color: '#0a0a0a', border: '1px solid #e5e5e5',
+                borderRadius: 8, padding: '6px 12px', fontSize: 12, fontWeight: 600, cursor: 'pointer'
+              }}
+            >
+              ← <span className="chat-back-text">Retour</span>
+            </button>
+            <button
               className="chat-mobile-btn"
               onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
             >
@@ -205,11 +216,11 @@ export default function ChatPage({ data, playerInfo, onBack }) {
 
         {/* Messages */}
         <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ maxWidth: 760, width: '100%', margin: '0 auto', padding: '32px 24px', display: 'flex', flexDirection: 'column', gap: 24 }}>
+          <div className="chat-messages-container" style={{ maxWidth: 760, width: '100%', margin: '0 auto', padding: '32px 24px', display: 'flex', flexDirection: 'column', gap: 24 }}>
 
             {/* Welcome screen */}
             {chatHistory.length === 0 && (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20, marginTop: '8vh' }}>
+              <div className="chat-welcome-box" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20, marginTop: '8vh' }}>
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ fontSize: 26, fontWeight: 800, color: '#0a0a0a', letterSpacing: '-0.03em', marginBottom: 8 }}>
                     Bonjour, {playerInfo?.name?.split(' ')[0] || 'Champion'} 👋
@@ -220,7 +231,7 @@ export default function ChatPage({ data, playerInfo, onBack }) {
                 </div>
 
                 {/* Quick prompts */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, width: '100%', maxWidth: 560, marginTop: 8 }}>
+                <div className="chat-quick-prompts" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, width: '100%', maxWidth: 560, marginTop: 8 }}>
                   {QUICK_PROMPTS.map((q, i) => (
                     <button key={i} onClick={() => sendMessage(q)} style={{
                       padding: '14px 16px', background: '#fff', border: '1px solid #e5e5e5',
@@ -248,7 +259,7 @@ export default function ChatPage({ data, playerInfo, onBack }) {
                   {msg.role === 'user' ? 'Vous' : 'Coach IA'}
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, maxWidth: '80%', flexDirection: msg.role === 'user' ? 'row-reverse' : 'row' }}>
+                <div className="chat-message-bubble-wrap" style={{ display: 'flex', alignItems: 'flex-start', gap: 12, maxWidth: '80%', flexDirection: msg.role === 'user' ? 'row-reverse' : 'row' }}>
 
                   {/* Avatar */}
                   {msg.role === 'assistant' && (
@@ -303,7 +314,7 @@ export default function ChatPage({ data, playerInfo, onBack }) {
         </div>
 
         {/* ── Input bar ── */}
-        <div style={{ padding: '16px 24px 24px', background: '#fafafa', borderTop: '1px solid #f0f0f0' }}>
+        <div className="chat-input-area" style={{ padding: '16px 24px 24px', background: '#fafafa', borderTop: '1px solid #f0f0f0' }}>
           <div style={{ maxWidth: 760, margin: '0 auto', position: 'relative' }}>
             <input
               ref={inputRef}
@@ -315,7 +326,7 @@ export default function ChatPage({ data, playerInfo, onBack }) {
               style={{
                 width: '100%', padding: '16px 56px 16px 20px',
                 border: '1.5px solid #e5e5e5', borderRadius: 14,
-                fontFamily: 'var(--fb)', fontSize: 15, color: '#0a0a0a',
+                fontFamily: 'var(--fb)', fontSize: 16, color: '#0a0a0a',
                 background: '#fff', outline: 'none',
                 boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
                 transition: 'border-color 0.2s, box-shadow 0.2s',
