@@ -292,40 +292,42 @@ export default function Results({ data, playerInfo, target, onReeval, onRestart,
                     const barPct = Math.min(100, (g.player_value / Math.max(g.target_value, 1)) * 100);
                     const gapAbs = Math.abs(g.gap).toFixed(0);
                     return (
-                      <div key={g.category} className="card" style={{ padding: '20px 24px', borderLeft: `4px solid ${isPositive ? '#10b981' : g.priority === 'CRITIQUE' ? '#ef4444' : g.priority === 'HAUTE' ? '#f59e0b' : '#3b82f6'}` }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
+                      <div key={g.category} className="card gap-card" style={{ padding: '20px 24px', borderLeft: `4px solid ${isPositive ? '#10b981' : g.priority === 'CRITIQUE' ? '#ef4444' : g.priority === 'HAUTE' ? '#f59e0b' : '#3b82f6'}` }}>
+                        <div className="gap-card-inner" style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
 
                           {/* Category name + badge */}
-                          <div style={{ minWidth: 130, flexShrink: 0 }}>
+                          <div className="gap-cat-col" style={{ minWidth: 130, flexShrink: 0 }}>
                             <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--text)', marginBottom: 4 }}>{g.category}</div>
                             {!isPositive && <span className={`badge ${priorityBadge(g.priority)}`} style={{ fontSize: 10 }}>PRIORITÉ {g.priority}</span>}
                             {isPositive && <span className="badge badge-success" style={{ fontSize: 10 }}>ACQUIS ✓</span>}
                           </div>
 
-                          {/* You score */}
-                          <div style={{ textAlign: 'center', minWidth: 52 }}>
-                            <div style={{ fontSize: 10, color: '#a3a3a3', textTransform: 'uppercase', marginBottom: 2 }}>Vous</div>
-                            <div style={{ fontSize: 26, fontWeight: 900, color: isPositive ? '#10b981' : 'var(--text)' }}>{Math.round(g.player_value)}</div>
-                          </div>
-
-                          {/* Progress bar + delta */}
-                          <div style={{ flex: 1, minWidth: 120 }}>
-                            <div style={{ position: 'relative', height: 8, background: '#f0f0f0', borderRadius: 4, overflow: 'hidden', marginBottom: 6 }}>
-                              <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${barPct}%`, background: isPositive ? '#10b981' : '#0a0a0a', borderRadius: 4 }} />
+                          <div className="gap-scores-wrap" style={{ display: 'flex', alignItems: 'center', gap: 16, flex: 1, minWidth: 260 }}>
+                            {/* You score */}
+                            <div style={{ textAlign: 'center', minWidth: 52 }}>
+                              <div style={{ fontSize: 10, color: '#a3a3a3', textTransform: 'uppercase', marginBottom: 2 }}>Vous</div>
+                              <div style={{ fontSize: 26, fontWeight: 900, color: isPositive ? '#10b981' : 'var(--text)' }}>{Math.round(g.player_value)}</div>
                             </div>
-                            <div style={{ textAlign: 'center', fontSize: 11, fontWeight: 700, color: isPositive ? '#10b981' : '#ef4444' }}>
-                              {isPositive ? `+${gapAbs} points d'avance` : `−${gapAbs} points à combler`}
-                            </div>
-                          </div>
 
-                          {/* Target score */}
-                          <div style={{ textAlign: 'center', minWidth: 52 }}>
-                            <div style={{ fontSize: 10, color: '#a3a3a3', textTransform: 'uppercase', marginBottom: 2 }}>Cible</div>
-                            <div style={{ fontSize: 26, fontWeight: 900, color: 'var(--text)' }}>{Math.round(g.target_value)}</div>
+                            {/* Progress bar + delta */}
+                            <div style={{ flex: 1, minWidth: 100 }}>
+                              <div style={{ position: 'relative', height: 8, background: '#f0f0f0', borderRadius: 4, overflow: 'hidden', marginBottom: 6 }}>
+                                <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${barPct}%`, background: isPositive ? '#10b981' : '#0a0a0a', borderRadius: 4 }} />
+                              </div>
+                              <div style={{ textAlign: 'center', fontSize: 11, fontWeight: 700, color: isPositive ? '#10b981' : '#ef4444' }}>
+                                {isPositive ? `+${gapAbs} points d'avance` : `−${gapAbs} points à combler`}
+                              </div>
+                            </div>
+
+                            {/* Target score */}
+                            <div style={{ textAlign: 'center', minWidth: 52 }}>
+                              <div style={{ fontSize: 10, color: '#a3a3a3', textTransform: 'uppercase', marginBottom: 2 }}>Cible</div>
+                              <div style={{ fontSize: 26, fontWeight: 900, color: 'var(--text)' }}>{Math.round(g.target_value)}</div>
+                            </div>
                           </div>
 
                           {/* Explanation */}
-                          <div style={{ minWidth: 220, flex: 1, fontSize: 13, color: '#737373', lineHeight: 1.5, paddingLeft: 20, borderLeft: '1px solid var(--border)' }}>
+                          <div className="gap-explanation-col" style={{ minWidth: 220, flex: 1, fontSize: 13, color: '#737373', lineHeight: 1.5, paddingLeft: 20, borderLeft: '1px solid var(--border)' }}>
                             {getGapExplanation(g.category, g.gap)}
                           </div>
                         </div>
@@ -431,11 +433,11 @@ export default function Results({ data, playerInfo, target, onReeval, onRestart,
                   </div>
 
                   {/* ── Body ── */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                  <div className="similar-card-body" style={{ display: 'flex', flexWrap: 'wrap' }}>
 
                     {/* Left: Category match gauges */}
                     {s.category_match && (
-                      <div style={{ padding: '20px 24px', borderRight: '1px solid var(--border)', minWidth: 160, display: 'flex', flexDirection: 'column', gap: 10, justifyContent: 'center' }}>
+                      <div className="similar-gauges-col" style={{ padding: '20px 24px', borderRight: '1px solid var(--border)', minWidth: 160, display: 'flex', flexDirection: 'column', gap: 10, justifyContent: 'center' }}>
                         <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', color: '#a3a3a3', marginBottom: 4 }}>Similitude par axe</div>
                         {[
                           { key: 'Scoring', label: 'Scoring', color: '#FF5722' },
@@ -459,12 +461,12 @@ export default function Results({ data, playerInfo, target, onReeval, onRestart,
                     )}
 
                     {/* Center: Stats table + explanation */}
-                    <div style={{ flex: 1, padding: '20px 28px', display: 'flex', flexDirection: 'column', gap: 16, minWidth: 220 }}>
+                    <div className="similar-stats-col" style={{ flex: 1, padding: '20px 28px', display: 'flex', flexDirection: 'column', gap: 16, minWidth: 220 }}>
                       
                       {/* Stats comparison table */}
                       <div>
                         <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', color: '#a3a3a3', marginBottom: 10 }}>Statistiques NBA (saison {p.season ? Math.round(p.season) : '—'})</div>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+                        <div className="similar-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
                           {[
                             { label: 'PTS', val: p.pts_per_game },
                             { label: 'AST', val: p.ast_per_game },
@@ -494,7 +496,7 @@ export default function Results({ data, playerInfo, target, onReeval, onRestart,
 
                     {/* Right: Career evolution chart */}
                     {traj.length > 1 && (
-                      <div style={{ width: 200, padding: '20px 16px', borderLeft: '1px solid var(--border)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                      <div className="similar-chart-col" style={{ width: 200, padding: '20px 16px', borderLeft: '1px solid var(--border)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '.05em', marginBottom: 10, textAlign: 'center' }}>
                           Évolution PTS / Saison
                         </div>
@@ -518,21 +520,23 @@ export default function Results({ data, playerInfo, target, onReeval, onRestart,
           <div className="fade-in">
             {/* Milestones Timeline */}
             {milestones.length > 0 && (
-              <div className="card" style={{ padding: '32px 24px', marginBottom: 28 }}>
+              <div className="card milestones-card" style={{ padding: '32px 24px', marginBottom: 28 }}>
                 <div style={{ fontSize: 13, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.08em', color: '#a3a3a3', marginBottom: 24 }}>
                   Paliers de Progression
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative' }}>
-                  <div style={{ position: 'absolute', top: 12, left: 24, right: 24, height: 2, background: '#f0f0f0', zIndex: 0 }} />
-                  {[{level: 'Niveau Actuel', target_overall_score: overall}, ...milestones].map((m, i) => (
-                    <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 1, flex: 1 }}>
-                      <div style={{ width: 26, height: 26, borderRadius: '50%', background: i===0 ? '#FF5722' : '#fff', border: `3px solid ${i===0?'#FF5722':'#e5e5e5'}`, marginBottom: 12, color: i===0?'#fff':'#a3a3a3', display:'flex', alignItems:'center', justifyContent:'center', fontSize: 11, fontWeight: 'bold' }}>
-                        {i===0 ? '✓' : i}
+                <div className="milestones-track-wrap" style={{ overflowX: 'auto', paddingBottom: 8 }}>
+                  <div className="milestones-track" style={{ display: 'flex', justifyContent: 'space-between', position: 'relative', minWidth: 420 }}>
+                    <div style={{ position: 'absolute', top: 12, left: 24, right: 24, height: 2, background: '#f0f0f0', zIndex: 0 }} />
+                    {[{level: 'Niveau Actuel', target_overall_score: overall}, ...milestones].map((m, i) => (
+                      <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 1, flex: 1 }}>
+                        <div style={{ width: 26, height: 26, borderRadius: '50%', background: i===0 ? '#FF5722' : '#fff', border: `3px solid ${i===0?'#FF5722':'#e5e5e5'}`, marginBottom: 12, color: i===0?'#fff':'#a3a3a3', display:'flex', alignItems:'center', justifyContent:'center', fontSize: 11, fontWeight: 'bold' }}>
+                          {i===0 ? '✓' : i}
+                        </div>
+                        <div style={{ fontSize: 14, fontWeight: 600, color: i===0 ? '#0a0a0a' : '#737373', textAlign: 'center' }}>{m.level}</div>
+                        <div style={{ fontSize: 12, color: '#a3a3a3', marginTop: 4 }}>Score: {Math.round(m.target_overall_score)}/100</div>
                       </div>
-                      <div style={{ fontSize: 14, fontWeight: 600, color: i===0 ? '#0a0a0a' : '#737373', textAlign: 'center' }}>{m.level}</div>
-                      <div style={{ fontSize: 12, color: '#a3a3a3', marginTop: 4 }}>Score: {Math.round(m.target_overall_score)}/100</div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -589,7 +593,7 @@ export default function Results({ data, playerInfo, target, onReeval, onRestart,
         )}
 
         {/* ── ACTIONS ── */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 48, paddingTop: 32, borderTop: '1px solid var(--border)' }}>
+        <div className="results-bottom-actions" style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 48, paddingTop: 32, borderTop: '1px solid var(--border)' }}>
           <button className="btn btn-ghost" onClick={onReeval}>↺ Réévaluer mes statistiques</button>
           <button className="btn btn-accent" onClick={onRestart}>Nouvelle analyse</button>
         </div>
