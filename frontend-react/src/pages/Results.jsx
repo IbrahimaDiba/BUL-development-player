@@ -593,9 +593,9 @@ export default function Results({ data, playerInfo, target, onReeval, onRestart,
         )}
 
         {/* ── ACTIONS ── */}
-        <div className="results-bottom-actions" style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 48, paddingTop: 32, borderTop: '1px solid var(--border)' }}>
-          <button className="btn btn-ghost" onClick={onReeval}>↺ Réévaluer mes statistiques</button>
-          <button className="btn btn-accent" onClick={onRestart}>Nouvelle analyse</button>
+        <div className="results-bottom-actions" style={{ display: 'flex', justifyContent: 'center', gap: 16, marginTop: 48, paddingTop: 32, borderTop: '1px solid var(--border)', flexWrap: 'wrap' }}>
+          <button className="btn btn-ghost" onClick={onReeval} style={{ padding: '14px 28px', whiteSpace: 'nowrap' }}>↺ Réévaluer mes statistiques</button>
+          <button className="btn btn-accent" onClick={onRestart} style={{ padding: '14px 28px', whiteSpace: 'nowrap' }}>Nouvelle analyse</button>
         </div>
       </div>
     </div>
