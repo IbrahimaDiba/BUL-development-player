@@ -21,7 +21,7 @@ export default function Step3Target({ target, onSelect, onAnalyze, onBack }) {
   return (
     <div style={{minHeight:'100vh',background:'#fff',display:'flex',flexDirection:'column'}}>
       <nav className="nav"><div className="nav-inner"><div className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>BUL Player Development</div></div></nav>
-      <div style={{maxWidth:700,margin:'0 auto',padding:'48px 24px',width:'100%'}}>
+      <div className="form-container target-step-container" style={{maxWidth:700,margin:'0 auto',padding:'48px 24px',width:'100%'}}>
         {/* Steps */}
         <div className="steps">
           {['Profil','Statistiques','Cible NBA'].map((l,i)=>(
@@ -40,7 +40,7 @@ export default function Step3Target({ target, onSelect, onAnalyze, onBack }) {
         {/* Search */}
         <div className="search-wrap" style={{marginBottom:16}}>
           <span className="search-icon">⌕</span>
-          <input className="search-input" placeholder="Rechercher un joueur NBA (ex: LeBron James, Stephen Curry...)" value={query} onChange={e=>setQuery(e.target.value)} />
+          <input className="search-input" placeholder="Rechercher un joueur (ex: Curry, LeBron...)" value={query} onChange={e=>setQuery(e.target.value)} />
         </div>
 
         {/* Results */}
@@ -63,9 +63,9 @@ export default function Step3Target({ target, onSelect, onAnalyze, onBack }) {
 
         {target&&<div style={{background:'#FFF3F0',border:'1px solid #FF5722',borderRadius:12,padding:'12px 16px',marginBottom:24,fontSize:14,color:'#FF5722',fontWeight:600}}>✓ Cible : {target.name}</div>}
 
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',paddingTop:24,borderTop:'1px solid var(--g100)'}}>
+        <div className="target-actions" style={{display:'flex',justifyContent:'space-between',alignItems:'center',paddingTop:24,borderTop:'1px solid var(--g100)'}}>
           <button className="btn btn-ghost" onClick={onBack}>← Retour</button>
-          <div style={{display:'flex',gap:12,alignItems:'center'}}>
+          <div className="target-actions-right" style={{display:'flex',gap:12,alignItems:'center'}}>
             <button className="btn btn-ghost btn-sm" onClick={onAnalyze} style={{color:'#a3a3a3',borderColor:'var(--g200)'}}>Analyser sans cible</button>
             <button className="btn btn-accent btn-lg" onClick={onAnalyze} disabled={!target}>→ Lancer l'Analyse</button>
           </div>
